@@ -1,4 +1,4 @@
-<%= form_for @conn, booking_path(@conn, :create), fn booking -> %>
+<%= form_for @changeset, booking_path(@conn, :create), fn booking -> %>
     <div class="form-group">
         <%= label booking, :pickup_address, class: "control-label" %>
         <%= text_input booking, :pickup_address, class: "form-control" %>

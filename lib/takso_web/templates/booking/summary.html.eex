@@ -1,0 +1,18 @@
+<h2>Listing number of booking requests for each taxi</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Taxi</th>
+      <th>Number of requests</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for {taxi, requests} <- @tuples do %>
+    <tr>
+      <td><%= taxi %></td>
+      <td><%= requests %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

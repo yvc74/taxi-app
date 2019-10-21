@@ -1,0 +1,21 @@
+<h2>Listing bookings</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Pickup address</th>
+      <th>Drop off address</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for booking <- @bookings do %>
+    <tr>
+      <td><%= booking.pickup_address %></td>
+      <td><%= booking.dropoff_address %></td>
+      <td><%= booking.status %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+

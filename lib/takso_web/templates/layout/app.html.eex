@@ -14,11 +14,14 @@
   <body>
     <div class="container">
       <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
-        </nav>
+        <ol class="breadcrumb pull-right">
+<%= if @conn.assigns.current_user do %>
+          <li>Hello <%= @conn.assigns.current_user.username %></li>
+          <li><%= link "Log out", to: session_path(@conn, :delete, @conn.assigns.current_user), method: "delete" %></li>
+<% else %>
+          <li><%= link "Log in", to: session_path(@conn, :new) %></li>
+<% end %>
+        </ol>
         <span class="logo"></span>
       </header>
 
