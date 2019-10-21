@@ -4,7 +4,7 @@ use Mix.Config
 # you can enable the server option below.
 config :takso, TaksoWeb.Endpoint,
   http: [port: 4001],
-  server: false
+  server: true
 
 # Print only warnings and errors during test
 config :logger, level: :warn
@@ -13,7 +13,10 @@ config :logger, level: :warn
 config :takso, Takso.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "root",
   database: "takso_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :hound, driver: "chrome_driver"
+config :takso, sql_sandbox: true

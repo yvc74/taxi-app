@@ -8,6 +8,7 @@ defmodule Takso.Mixfile do
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      preferred_cli_env: ["white_bread.run": :test],
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps()
@@ -41,7 +42,9 @@ defmodule Takso.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"} ,
-      {:plug_cowboy, "~> 1.0"}
+      {:plug_cowboy, "~> 1.0"},
+      {:white_bread, "~> 4.5", only: [:test]},
+      {:hound, "~> 1.0"}
     ]
   end
 
@@ -55,7 +58,7 @@ defmodule Takso.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

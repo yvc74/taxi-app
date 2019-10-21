@@ -1,0 +1,17 @@
+<%= form_for @conn, booking_path(@conn, :create), fn booking -> %>
+    <div class="form-group">
+        <%= label booking, :pickup_address, class: "control-label" %>
+        <%= text_input booking, :pickup_address, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+        <%= label booking, :dropoff_address, class: "control-label" %>
+        <%= text_input booking, :dropoff_address, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+        <%= submit "Submit", id: "submit_button", class: "btn btn-primary" %>
+    </div>
+<% end %>
+
+
