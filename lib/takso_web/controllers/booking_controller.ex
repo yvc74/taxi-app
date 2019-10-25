@@ -1,12 +1,12 @@
 defmodule TaksoWeb.BookingController do
   use TaksoWeb, :controller
   import Ecto.Query, only: [from: 2]
-  alias Takso.Repo
+  alias Takso.{Authentication, Repo}
   alias Ecto.{Changeset, Multi}
   alias Takso.Sales.{Taxi, Booking, Allocation}
 
   def index(conn, _params) do
-    bookings = Repo.all(from b in Booking, where: b.user_id == ^conn.assigns.current_user.id)
+    bookings = Repo.all(from b in Booking, where: b.user_id == ^Takso.Authentication.load_current_user(@conn).id)
     render conn, "index.html", bookings: bookings
   end
 
@@ -40,8 +40,6 @@ defmodule TaksoWeb.BookingController do
 
       _    -> Booking.changeset(booking) |> Changeset.put_change(:status, "rejected")
                 |> Repo.update
-
-              _ ->
                 conn
                 |> put_flash(:info, "At present, there is no taxi available!")
                 |> redirect(to: booking_path(conn, :index))

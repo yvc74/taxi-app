@@ -1,40 +1,27 @@
 defmodule Takso.Authentication do
-  import Plug.Conn
+  alias Takso.Guardian
 
-  def init(opts) do
-    opts[:repo]
-  end
 
-  def call(conn, repo) do
-    IO.puts("HI THERE ...")
-    user = repo.get(Takso.Accounts.User, 1)
-    assign(conn, :current_user, user)
-  end
-
-  def call(conn, repo) do
-    user_id = get_session(conn, :user_id)
-    user = user_id && repo.get(Takso.Accounts.User, user_id)
-    login(conn, user_id, user)
-  end
-
-  def login(conn, user_id, user) do
-    assign(conn, :current_user, user)
-    |> put_session(:user_id, user_id)
-  end
-
-  @spec check_credentials(any, any, any, [{:repo, atom}, ...]) ::
-          {:ok, Plug.Conn.t()} | {:error, :unauthorized, any}
-  def check_credentials(conn, username, password, repo: repo) do
-    user = repo.get_by(Takso.Accounts.User, username: username)
-
-    if user.password == password do
-      {:ok, login(conn, user.id, user)}
+  def check_credentials(user, plain_text_password) do
+    if user && Pbkdf2.verify_pass(plain_text_password, user.hashed_password) do
+      {:ok, user}
     else
-      {:error, :unauthorized, conn}
+      {:error, :unauthorized_user}
     end
   end
 
-  def logout(conn) do
-    configure_session(conn, drop: true)
+  def login(conn, user) do
+    conn
+    |> Guardian.Plug.sign_in(user)
   end
+
+  def logout(conn) do
+    conn
+    |> Guardian.Plug.sign_out()
+  end
+
+  def load_current_user(conn) do
+    Guardian.Plug.current_resource(conn)
+  end
+
 end
