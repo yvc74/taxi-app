@@ -1,0 +1,40 @@
+{
+    "authenticationResultCode": "ValidCredentials",
+    "brandLogoUri": "http:\\/\\/dev.virtualearth.net\\/Branding\\/logo_powered_by.png",
+    "copyright": "Copyright ┬й 2019 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.",
+    "resourceSets": [
+        {
+            "estimatedTotal": 1,
+            "resources": [
+                {
+                    "__type": "DistanceMatrix:http:\\/\\/schemas.microsoft.com\\/search\\/local\\/ws\\/rest\\/v1",
+                    "destinations": [
+                        {
+                            "latitude": 37.8363032,
+                            "longitude": 57.4974214
+                        }
+                    ],
+                    "errorMessage": "Request completed but some pairs could not be processed.",
+                    "origins": [
+                        {
+                            "latitude": 58.35806,
+                            "longitude": 26.6777
+                        }
+                    ],
+                    "results": [
+                        {
+                            "destinationIndex": 0,
+                            "originIndex": 0,
+                            "totalWalkDuration": 0,
+                            "travelDistance": -1,
+                            "travelDuration": -1
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "statusCode": 200,
+    "statusDescription": "OK",
+    "traceId": "0df7eca0e81647f396e2009211e960d1|DU00000D5A|7.7.0.0"
+}

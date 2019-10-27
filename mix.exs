@@ -46,7 +46,9 @@ defmodule Takso.Mixfile do
       {:white_bread, "~> 4.5", only: [:test]},
       {:hound, "~> 1.0"},
       {:guardian, "~> 1.2"},
-      {:pbkdf2_elixir, "~> 1.0"}
+      {:pbkdf2_elixir, "~> 1.0"},
+      {:httpoison, "~> 1.6"},
+      {:poison, "~> 3.1"}
     ]
   end
 

@@ -1,8 +1,7 @@
 defmodule WhiteBreadContext do
   use WhiteBread.Context
   use Hound.Helpers
-
-  alias Takso.{Repo,Sales.Taxi}
+  alias Takso.{Repo,Sales.Taxi, Accounts.User}
 
   feature_starting_state fn  ->
     Application.ensure_all_started(:hound)
@@ -18,7 +17,7 @@ defmodule WhiteBreadContext do
 
   scenario_finalize fn _status, _state ->
     Ecto.Adapters.SQL.Sandbox.checkin(Takso.Repo)
-    Hound.end_session
+    # Hound.end_session
   end
 
   given_ ~r/^the following taxis are on duty$/, fn state, %{table_data: table} ->
@@ -39,8 +38,8 @@ defmodule WhiteBreadContext do
   end
 
   and_ ~r/^I enter the booking information$/, fn state ->
-    fill_field({:id, "pickup_address"}, state[:pickup_address])
-    fill_field({:id, "dropoff_address"}, state[:dropoff_address])
+    fill_field({:id, "booking_pickup_address"}, state[:pickup_address])
+    fill_field({:id, "booking_dropoff_address"}, state[:dropoff_address])
     {:ok, state}
   end
 
@@ -59,4 +58,28 @@ defmodule WhiteBreadContext do
     {:ok, state}
   end
 
+  given_ ~r/^I want to login with username "(?<username>[^"]+)" and password "(?<password>[^"]+)"$/, fn state, %{username: username, password: password} ->
+    {:ok, state |> Map.put(:username, username) |> Map.put(:password, password)}
+  end
+
+  and_ ~r/^I open login page$/, fn state ->
+    navigate_to "/sessions/new"
+    {:ok, state}
+  end
+
+  and_ ~r/^I enter login information$/, fn state ->
+    fill_field({:id, "session_username"}, state[:username])
+    fill_field({:id, "session_password"}, state[:password])
+    {:ok, state}
+  end
+
+  when_ ~r/^I submit the login request$/, fn state ->
+    click({:id, "submit_button"})
+    {:ok, state}
+  end
+
+  then_ ~r/^I should receive a greeting message$/, fn state ->
+    assert visible_in_page? ~r/Welcome/
+    {:ok, state}
+  end
 end
